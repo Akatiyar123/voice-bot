@@ -1,0 +1,12 @@
+{
+  "name": "aman-voice-bot",
+  "version": "1.0.0",
+  "description": "A voice bot that answers interview questions the way Aman would.",
+  "type": "module",
+  "private": true,
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  }
+}
