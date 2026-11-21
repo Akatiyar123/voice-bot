@@ -238,11 +238,25 @@
     voiceSelect.closest("label").style.display = voices.length ? "" : "none";
     if (!voices.length) return;
     const saved = store.get("voice");
+    // Default voice, in order of preference. "Google UK English Male" exists only in desktop
+    // Chrome; the rest are the closest male English voices on Edge, Safari/macOS/iOS and Android.
+    const PREFERRED = [
+      /^Google UK English Male$/i,
+      /Microsoft Ryan.*United Kingdom/i,       // Edge (natural voice)
+      /^Daniel/i,                              // Safari / macOS / iOS, en-GB male
+      /^Rishi/i,                               // Apple, en-IN male
+      /Microsoft (Prabhat|Ravi)/i,             // Windows, en-IN male
+      /en-gb-x-.*(rjs|gbd|gbb)/i,              // Android Chrome, en-GB male
+    ];
+    const pref = (v) => {
+      const i = PREFERRED.findIndex((re) => re.test(v.name));
+      return i === -1 ? 0 : 50 - i;
+    };
     const rank = (v) =>
       (v.name === saved ? 100 : 0) +
-      (/en-IN/i.test(v.lang) ? 8 : 0) +
-      (/natural|neural|google|premium|enhanced/i.test(v.name) ? 4 : 0) +
-      (v.localService ? 1 : 0);
+      pref(v) +
+      (/en-GB/i.test(v.lang) ? 3 : 0) +
+      (/natural|neural|google|premium|enhanced/i.test(v.name) ? 2 : 0);
     voices.sort((a, b) => rank(b) - rank(a));
     voiceSelect.innerHTML = "";
     voices.forEach((v, i) => {
