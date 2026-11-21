@@ -3,7 +3,7 @@
 Open the link, tap the mic, ask a question out loud, and the bot answers out loud the way I would.
 It needs no installation and no API key, and it works on desktop and mobile browsers.
 
-**Live demo:** `https://<your-project>.vercel.app` ← replace after deploying
+**Live demo:** `https://voice-bot-aman-katiyar.vercel.app/`
 
 ---
 
